@@ -11,5 +11,5 @@ COPY start.sh /start.sh
 COPY iphost.py /iphost.py
 COPY disk-usage.py /disk-usage.py
 RUN chmod +x /start.sh
-USER dmonk
+
 ENTRYPOINT ["./start.sh"]
