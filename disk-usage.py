@@ -1,7 +1,6 @@
 import pandas as pd
 import subprocess
 import iphost
-import plotly.graph_objects as go
 import plotly.express as px
 import re
 
@@ -44,7 +43,7 @@ def main():
     print(df)
     fig = px.bar(df, x="Mounted", y="Fraction")
     fig.update_yaxes(range=[0, 1])
-    fig.write_html('/plots/index.html')
+    fig.write_html('/plots/usage.html')
 
 
 if __name__ == '__main__':
