@@ -11,10 +11,10 @@ else:
     from io import StringIO
 
 
-def parseShellCall():
+def parseShellCall(username):
     output = subprocess.check_output(
         ["ssh", "-o", "StrictHostKeyChecking=no",
-         "dmonk@%s" % iphost.get(), "df"]
+         "%s@%s" % (username, iphost.get()), "df"]
     ).decode("utf-8")
     lines = output.split("\n")
     disks = []
@@ -38,7 +38,7 @@ def generateDataFrame(shell_output):
 
 
 def main():
-    output = parseShellCall()
+    output = parseShellCall(sys.argv[1])
     df = generateDataFrame(output)
     print(df)
     fig = px.bar(df, x="Mounted", y="Fraction")
