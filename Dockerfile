@@ -1,16 +1,15 @@
-FROM alpine:latest
+FROM ubuntu:latest
 
-RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
-RUN apk update
-RUN apk upgrade
-RUN apk add net-tools openssh gcc g++
-RUN ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa
-RUN apk add python3 python3-dev py3-pip
-RUN pip3 install --upgrade pip setuptools
-RUN pip3 install numpy
+RUN apt-get update && \
+    apt-get -y upgrade && \
+    apt-get -y install net-tools ssh && \
+    ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa && \
+    apt-get -y install python python-pip && \
+    pip install numpy pandas matplotlib plotly==4.1.0
 
 COPY start.sh /start.sh
-COPY ipaddress.py /ipaddress.py
+COPY iphost.py /iphost.py
+COPY disk-usage.py /disk-usage.py
 RUN chmod +x /start.sh
 
 ENTRYPOINT ["./start.sh"]
