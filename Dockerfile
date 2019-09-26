@@ -1,11 +1,13 @@
-FROM ubuntu:latest
+FROM alpine:latest
 
-RUN apt-get update
-RUN apt-get -y upgrade
-RUN apt-get -y install net-tools ssh
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+RUN apk update
+RUN apk upgrade
+RUN apk add net-tools openssh gcc g++
 RUN ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa
-RUN apt-get -y install python python-pip
-RUN pip install numpy pandas matplotlib
+RUN apk add python3 python3-dev py3-pip
+RUN pip3 install --upgrade pip setuptools
+RUN pip3 install numpy
 
 COPY start.sh /start.sh
 COPY ipaddress.py /ipaddress.py
